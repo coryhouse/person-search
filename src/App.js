@@ -1,4 +1,5 @@
 import React from "react";
+import Card from "./Card";
 
 function App() {
   const people = [
@@ -19,7 +20,14 @@ function App() {
       zip: 82833
     }
   ];
-  return <h1>People</h1>;
+  return (
+    <>
+      <h1>People</h1>
+      {people.map(person => (
+        <Card person={person} />
+      ))}
+    </>
+  );
 }
 
 export default App;
