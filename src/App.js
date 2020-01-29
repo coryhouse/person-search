@@ -40,6 +40,10 @@ function App() {
         />
         <input type="submit" value="Search" />
       </form>
+      <p>
+        {people.length === 0 ? "No" : people.length}{" "}
+        {people.length === 1 ? "Record" : "Records"} Found
+      </p>
       {people.map(person => (
         <Card key={person.id} person={person} />
       ))}
