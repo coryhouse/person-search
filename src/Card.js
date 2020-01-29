@@ -33,6 +33,11 @@ function Card(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    savePerson(person).then(savedPerson => {
+      props.onSave(savedPerson);
+      setIsEditable(false);
+      setPerson(emptyPerson);
+    });
   }
 
   function renderForm() {

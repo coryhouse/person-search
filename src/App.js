@@ -27,6 +27,18 @@ function App() {
     setSearchTerm(event.target.value);
   }
 
+  function handleSave(savedPerson) {
+    const newPeople = people.map(person => {
+      if (person.id === savedPerson.id) {
+        // great, this is the person just saved
+        return savedPerson;
+      } else {
+        return person; // return existing person, in other words, do nothing.
+      }
+    });
+    setPeople(newPeople);
+  }
+
   return (
     <>
       <h1>People</h1>
@@ -45,7 +57,7 @@ function App() {
         {people.length === 1 ? "Record" : "Records"} Found
       </p>
       {people.map(person => (
-        <Card key={person.id} person={person} />
+        <Card key={person.id} person={person} onSave={handleSave} />
       ))}
     </>
   );
