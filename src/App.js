@@ -1,30 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./Card";
+import { getPeople, getPeopleByLastName } from "./api/personApi";
 
 function App() {
-  const people = [
-    {
-      id: 1,
-      lastName: "House",
-      phone: "938-838-3838",
-      dob: "1/1/1978",
-      medicalNumber: "1",
-      zip: 45434
-    },
-    {
-      id: 2,
-      lastName: "Nelson",
-      phone: "373-837-3838",
-      dob: "3/1/1988",
-      medicalNumber: "2",
-      zip: 82833
-    }
-  ];
+  // Declare state to store searchTerm, with setter called setSearchTerm
+  // Default to an empty string.
+  const [searchTerm, setSearchTerm] = useState("");
+  const [people, setPeople] = useState([]);
+
+  useEffect(() => {
+    getPeople().then(peopleResponse => {
+      setPeople(peopleResponse.data);
+    });
+    //Dependency array. Tells useEffect when to re-run.
+    //Says what state this effect should sync with.
+  }, []);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    getPeopleByLastName(searchTerm).then(peopleResponse => {
+      setPeople(peopleResponse.data);
+    });
+  }
+
+  function handleChange(event) {
+    setSearchTerm(event.target.value);
+  }
+
   return (
     <>
       <h1>People</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="search">Search by Last Name:</label>{" "}
+        <input
+          id="search"
+          type="text"
+          onChange={handleChange}
+          value={searchTerm}
+        />
+        <input type="submit" value="Search" />
+      </form>
       {people.map(person => (
-        <Card person={person} />
+        <Card key={person.id} person={person} />
       ))}
     </>
   );

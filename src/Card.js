@@ -12,4 +12,5 @@ function Card(props) {
   );
 }
 
+// Default export = Person importing can choose the identifier.
 export default Card;
