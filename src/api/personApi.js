@@ -8,3 +8,7 @@ export async function getPeople() {
 export async function getPeopleByLastName(lastName) {
   return axios.get("http://localhost:3001/person?q=" + lastName);
 }
+
+export async function savePerson(person) {
+  return axios.put("http://localhost:3001/person/" + person.id);
+}
